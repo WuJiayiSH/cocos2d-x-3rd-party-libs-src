@@ -14,7 +14,7 @@ This repository is needed for cocos2d-x developers and/or people who want to:
 
 - We use MacOSX to build all the static libraries for iOS, Android, Mac and Tizen.
 
-- We use Ubuntu to build all the static libraries for Linux.
+- We use Ubuntu to build all the static libraries for Linux and Emscripten.
 
 - Windows is not supported yet
 

@@ -393,6 +393,10 @@ case "${OS}" in
             ;;
 	*linux*)
 		add_make_enabled "HAVE_LINUX"
+    if test -n "$BUILDFOREMSCRIPTEN"
+    then
+      add_make_enabled "HAVE_EMSCRIPTEN"
+    fi
 		;;
 	*mingw*)
 		add_make_enabled "HAVE_WIN32"

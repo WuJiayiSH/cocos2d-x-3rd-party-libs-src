@@ -42,7 +42,7 @@ function usage()
     echo "    ./build.sh  -p=PLATFORM (-l | --list)"
     echo ""
     echo "Arguments:"
-    echo "    PLATFORM:    Platform names, valid values are: mac,ios,tvos,android,tizen,linux"
+    echo "    PLATFORM:    Platform names, valid values are: mac,ios,tvos,android,tizen,linux,emscripten"
     echo "    LIBRARY:     Library names, valid values are platform dependent(png,jpeg,lua,chipmunk,etc)"
     echo "    ARCH:        Build arches, valid values are platform dependent(arm,arm64,armv7,i386,mips,etc)"
     echo "    MODE:        Build mode, valid values are: release and debug"
@@ -373,6 +373,11 @@ do
         if [ $cfg_platform_name = "tvos" ];then
             export BUILDFORTVOS="yes"
         fi
+
+        if [ $cfg_platform_name = "emscripten" ];then
+            export BUILDFOREMSCRIPTEN="yes"
+        fi
+
 
         if [ $cfg_platform_name = "android" ];then
             if [ $MY_TARGET_ARCH = "arm64-v8a" ];then

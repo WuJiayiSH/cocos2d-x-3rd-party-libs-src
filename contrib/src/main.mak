@@ -101,6 +101,13 @@ RANLIB := $(HOST)-gcc-ranlib
 EXTRA_CFLAGS += --sysroot=$(ANDROID_TOOLCHAIN_PATH)/sysroot
 endif
 
+ifdef HAVE_EMSCRIPTEN
+CC := emcc
+CXX := em++
+AR := emar
+RANLIB := emranlib
+endif
+
 ifdef HAVE_TIZEN
 ifeq ($(ARCH),arm)
 CC := ${HOST}-gcc --sysroot=$(TIZEN_STUDIO_HOME)/platforms/tizen-$(TIZEN_SDK_VERSION)/mobile/rootstraps/mobile-$(TIZEN_SDK_VERSION)-device.core
@@ -345,8 +352,15 @@ UPDATE_AUTOCONFIG = for dir in $(AUTOMAKE_DATA_DIRS); do \
 
 RECONF = mkdir -p -- $(PREFIX)/share/aclocal && \
 	cd $< && autoreconf -fiv $(ACLOCAL_AMFLAGS)
+ifdef HAVE_EMSCRIPTEN
+CMAKE = emcmake cmake . -DCMAKE_TOOLCHAIN_FILE=$(abspath toolchain.cmake) \
+		-DCMAKE_INSTALL_PREFIX=$(PREFIX)
+
+MAKE = emmake make
+else
 CMAKE = cmake . -DCMAKE_TOOLCHAIN_FILE=$(abspath toolchain.cmake) \
 		-DCMAKE_INSTALL_PREFIX=$(PREFIX)
+endif
 
 #
 # Per-package build rules
@@ -442,6 +456,9 @@ endif  #end of HAVE_ANDROID
 
 ifdef HAVE_TIZEN
 	echo "set(CMAKE_SYSTEM_NAME Linux)" >> $@
+endif
+ifdef HAVE_EMSCRIPTEN
+	echo "set(CMAKE_AR emar CACHE FILEPATH "Archiver")" >> $@
 endif
 endif
 	echo "set(CMAKE_C_COMPILER $(CC))" >> $@
