@@ -3,7 +3,7 @@
 BOX2D_GITURL := https://github.com/erincatto/Box2D
 
 $(TARBALLS)/libbox2d-git.tar.xz:
-	$(call download_git,$(BOX2D_GITURL),master,f655c603ba9d83f07fc566d38d2654ba35739102)
+	$(call download_git,$(BOX2D_GITURL),main,f655c603ba9d83f07fc566d38d2654ba35739102)
 
 box2d: libbox2d-git.tar.xz
 	$(UNPACK)
