@@ -35,7 +35,9 @@ ifndef HAVE_WIN32
 	cd $< && $(HOSTVARS) $(ZLIB_CONFIG_VARS) CFLAGS="$(CFLAGS) $(EX_ECFLAGS)" ./configure --prefix=$(PREFIX) --static
 	cd $< && $(MAKE) install
 endif
-ifdef HAVE_WIN32
-	cd $< && make -fwin32/Makefile.gcc BINARY_PATH=$(PREFIX)/bin INCLUDE_PATH=$(PREFIX)/include LIBRARY_PATH=$(PREFIX)/lib install
+ifdef HAVE_WIN64
+	cd $< && make -fwin32/Makefile.gcc PREFIX=x86_64-w64-mingw32- BINARY_PATH=$(PREFIX)/bin INCLUDE_PATH=$(PREFIX)/include LIBRARY_PATH=$(PREFIX)/lib install
+else ifdef HAVE_WIN32
+	cd $< && make -fwin32/Makefile.gcc PREFIX=i686-w64-mingw32- BINARY_PATH=$(PREFIX)/bin INCLUDE_PATH=$(PREFIX)/include LIBRARY_PATH=$(PREFIX)/lib install
 endif
 	touch $@
